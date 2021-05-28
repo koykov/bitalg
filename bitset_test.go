@@ -22,13 +22,19 @@ func TestBitset(t *testing.T) {
 	}
 }
 
-func BenchmarkBitset(b *testing.B) {
+func BenchmarkBitset_SetBit(b *testing.B) {
 	var s Bitset
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		s.SetBit(flagFoo, true)
-		if !s.CheckBit(flagFoo) {
-			b.Error("bit mismatch flagFoo")
-		}
+	}
+}
+
+func BenchmarkBitset_CheckBit(b *testing.B) {
+	var s Bitset
+	s.SetBit(flagFoo, true)
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		s.CheckBit(flagFoo)
 	}
 }
