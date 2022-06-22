@@ -1,3 +1,5 @@
 package bitset
 
-type Bitset Bitset64
+type Bitset struct {
+	Bitset64
+}

@@ -22,19 +22,20 @@ func TestBitset(t *testing.T) {
 	}
 }
 
-func BenchmarkBitset_SetBit(b *testing.B) {
-	var s Bitset
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
+func BenchmarkBitset(b *testing.B) {
+	b.Run("set", func(b *testing.B) {
+		var s Bitset
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			s.SetBit(flagFoo, true)
+		}
+	})
+	b.Run("check", func(b *testing.B) {
+		var s Bitset
 		s.SetBit(flagFoo, true)
-	}
-}
-
-func BenchmarkBitset_CheckBit(b *testing.B) {
-	var s Bitset
-	s.SetBit(flagFoo, true)
-	b.ResetTimer()
-	for i := 0; i < b.N; i++ {
-		s.CheckBit(flagFoo)
-	}
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			s.CheckBit(flagFoo)
+		}
+	})
 }
