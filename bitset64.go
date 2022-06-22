@@ -1,7 +1,9 @@
 package bitset
 
+// Bitset64 represents sets of 64 bits.
 type Bitset64 uint64
 
+// SetBit sets bool value to bit on position pos [0:63].
 func (b *Bitset64) SetBit(pos int, value bool) {
 	if pos < 0 || pos > 63 {
 		return
@@ -14,6 +16,7 @@ func (b *Bitset64) SetBit(pos int, value bool) {
 	}
 }
 
+// CheckBit checks bool value of bit on position pos [0:63].
 func (b *Bitset64) CheckBit(pos int) bool {
 	if pos < 0 || pos > 63 {
 		return false
@@ -22,6 +25,7 @@ func (b *Bitset64) CheckBit(pos int) bool {
 	return (*b)&v != 0
 }
 
+// Reset sets all bits to false.
 func (b *Bitset64) Reset() {
 	*b = 0
 }
