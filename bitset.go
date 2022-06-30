@@ -6,4 +6,5 @@ type Interface interface {
 	Reset()
 }
 
+// Bitset is an alias of Bitset64.
 type Bitset = Bitset64
