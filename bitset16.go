@@ -33,7 +33,7 @@ func (b *Bitset16) Reset() {
 }
 
 // Write writes human-readable view of bitset to w.
-func (b *Bitset16) Write(w io.ByteWriter) (n int, err error) {
+func (b *Bitset16) Write(w io.ByteWriter) (int, error) {
 	return write(b, w, 16)
 }
 
