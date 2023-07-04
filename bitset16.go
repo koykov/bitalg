@@ -34,12 +34,29 @@ func (b *Bitset16) Reset() {
 
 // Append appends human-readable view of bitset to buf.
 func (b *Bitset16) Append(buf []byte) []byte {
-	return append_(b, buf, 16)
+	for i := 0; i < 16; i++ {
+		c := byte('0')
+		if b.CheckBit(i) {
+			c = '1'
+		}
+		buf = append(buf, c)
+	}
+	return buf
 }
 
 // Write writes human-readable view of bitset to w.
-func (b *Bitset16) Write(w io.ByteWriter) (int, error) {
-	return write(b, w, 16)
+func (b *Bitset16) Write(w io.ByteWriter) (n int, err error) {
+	for i := 0; i < 16; i++ {
+		c := byte('0')
+		if b.CheckBit(i) {
+			c = '1'
+		}
+		if err = w.WriteByte(c); err != nil {
+			return
+		}
+		n++
+	}
+	return
 }
 
 // String returns human-readable view of bitset.
