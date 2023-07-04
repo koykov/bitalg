@@ -1,5 +1,9 @@
 package bitset
 
+import (
+	"io"
+)
+
 // Bitset64 represents sets of 64 bits.
 type Bitset64 uint64
 
@@ -28,4 +32,14 @@ func (b *Bitset64) CheckBit(pos int) bool {
 // Reset sets all bits to false.
 func (b *Bitset64) Reset() {
 	*b = 0
+}
+
+// Write writes human-readable view of bitset to w.
+func (b *Bitset64) Write(w io.ByteWriter) (n int, err error) {
+	return write(b, w, 64)
+}
+
+// String returns human-readable view of bitset.
+func (b *Bitset64) String() string {
+	return str(b, 64)
 }

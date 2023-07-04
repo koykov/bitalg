@@ -1,6 +1,9 @@
 package bitset
 
-import "testing"
+import (
+	"bytes"
+	"testing"
+)
 
 const (
 	flagFoo = 0
@@ -8,18 +11,33 @@ const (
 )
 
 func TestBitset(t *testing.T) {
-	var b Bitset
-	b.SetBit(flagFoo, true)
-	if !b.CheckBit(flagFoo) {
-		t.Error("bit mismatch flagFoo")
-	}
-	if b.CheckBit(flagBar) {
-		t.Error("bit mismatch flagBar")
-	}
-	b.Reset()
-	if b.CheckBit(flagFoo) {
-		t.Error("bit mismatch flagFoo")
-	}
+	t.Run("io", func(t *testing.T) {
+		var b Bitset
+		b.SetBit(flagFoo, true)
+		if !b.CheckBit(flagFoo) {
+			t.Error("bit mismatch flagFoo")
+		}
+		if b.CheckBit(flagBar) {
+			t.Error("bit mismatch flagBar")
+		}
+		b.Reset()
+		if b.CheckBit(flagFoo) {
+			t.Error("bit mismatch flagFoo")
+		}
+	})
+	t.Run("print", func(t *testing.T) {
+		var b Bitset
+		b.SetBit(4, true)
+		b.SetBit(12, true)
+		b.SetBit(19, true)
+		b.SetBit(27, true)
+		b.SetBit(35, true)
+		b.SetBit(42, true)
+		b.SetBit(51, true)
+		if b.String() != "0000100000001000000100000001000000010000001000000001000000000000" {
+			t.FailNow()
+		}
+	})
 }
 
 func BenchmarkBitset(b *testing.B) {
@@ -36,6 +54,25 @@ func BenchmarkBitset(b *testing.B) {
 		b.ResetTimer()
 		for i := 0; i < b.N; i++ {
 			s.CheckBit(flagFoo)
+		}
+	})
+	b.Run("print", func(b *testing.B) {
+		b.ReportAllocs()
+		var (
+			bs  Bitset
+			buf bytes.Buffer
+		)
+		for i := 0; i < b.N; i++ {
+			bs.SetBit(4, true)
+			bs.SetBit(12, true)
+			bs.SetBit(19, true)
+			bs.SetBit(27, true)
+			bs.SetBit(35, true)
+			bs.SetBit(42, true)
+			bs.SetBit(51, true)
+			buf.Reset()
+			_, _ = bs.Write(&buf)
+			_ = buf.Bytes()
 		}
 	})
 }
