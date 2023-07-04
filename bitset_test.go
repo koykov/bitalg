@@ -75,4 +75,23 @@ func BenchmarkBitset(b *testing.B) {
 			_ = buf.Bytes()
 		}
 	})
+	b.Run("print append", func(b *testing.B) {
+		b.ReportAllocs()
+		var (
+			bs  Bitset
+			buf []byte
+		)
+		for i := 0; i < b.N; i++ {
+			bs.SetBit(4, true)
+			bs.SetBit(12, true)
+			bs.SetBit(19, true)
+			bs.SetBit(27, true)
+			bs.SetBit(35, true)
+			bs.SetBit(42, true)
+			bs.SetBit(51, true)
+			buf = buf[:0]
+			buf = bs.Append(buf)
+		}
+		_ = buf
+	})
 }

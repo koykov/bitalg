@@ -32,6 +32,11 @@ func (b *Bitset8) Reset() {
 	*b = 0
 }
 
+// Append appends human-readable view of bitset to buf.
+func (b *Bitset8) Append(buf []byte) []byte {
+	return append_(b, buf, 8)
+}
+
 // Write writes human-readable view of bitset to w.
 func (b *Bitset8) Write(w io.ByteWriter) (int, error) {
 	return write(b, w, 8)

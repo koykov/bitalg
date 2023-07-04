@@ -10,6 +10,7 @@ type Interface interface {
 	CheckBit(int) bool
 	Reset()
 	Write(writer io.ByteWriter) (int, error)
+	Append([]byte) []byte
 	String() string
 }
 
@@ -28,6 +29,17 @@ func write(b Interface, w io.ByteWriter, size int) (n int, err error) {
 		n++
 	}
 	return
+}
+
+func append_(b Interface, buf []byte, size int) []byte {
+	for i := 0; i < size; i++ {
+		c := byte('0')
+		if b.CheckBit(i) {
+			c = '1'
+		}
+		buf = append(buf, c)
+	}
+	return buf
 }
 
 func str(b Interface, size int) string {

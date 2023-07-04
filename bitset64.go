@@ -34,8 +34,13 @@ func (b *Bitset64) Reset() {
 	*b = 0
 }
 
+// Append appends human-readable view of bitset to buf.
+func (b *Bitset64) Append(buf []byte) []byte {
+	return append_(b, buf, 64)
+}
+
 // Write writes human-readable view of bitset to w.
-func (b *Bitset64) Write(w io.ByteWriter) (int, error) {
+func (b *Bitset64) Write(w io.ByteWriter) (n int, err error) {
 	return write(b, w, 64)
 }
 
