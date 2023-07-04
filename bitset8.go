@@ -1,5 +1,7 @@
 package bitset
 
+import "io"
+
 // Bitset8 represents sets of 8 bits.
 type Bitset8 uint8
 
@@ -28,4 +30,14 @@ func (b *Bitset8) CheckBit(pos int) bool {
 // Reset sets all bits to false.
 func (b *Bitset8) Reset() {
 	*b = 0
+}
+
+// Write writes human-readable view of bitset to w.
+func (b *Bitset8) Write(w io.ByteWriter) (n int, err error) {
+	return write(b, w, 8)
+}
+
+// String returns human-readable view of bitset.
+func (b *Bitset8) String() string {
+	return str(b, 8)
 }

@@ -1,5 +1,7 @@
 package bitset
 
+import "io"
+
 // Bitset32 represents sets of 32 bits.
 type Bitset32 uint32
 
@@ -28,4 +30,14 @@ func (b *Bitset32) CheckBit(pos int) bool {
 // Reset sets all bits to false.
 func (b *Bitset32) Reset() {
 	*b = 0
+}
+
+// Write writes human-readable view of bitset to w.
+func (b *Bitset32) Write(w io.ByteWriter) (n int, err error) {
+	return write(b, w, 32)
+}
+
+// String returns human-readable view of bitset.
+func (b *Bitset32) String() string {
+	return str(b, 32)
 }

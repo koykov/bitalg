@@ -1,5 +1,7 @@
 package bitset
 
+import "io"
+
 // Bitset16 represents sets of 16 bits.
 type Bitset16 uint16
 
@@ -28,4 +30,14 @@ func (b *Bitset16) CheckBit(pos int) bool {
 // Reset sets all bits to false.
 func (b *Bitset16) Reset() {
 	*b = 0
+}
+
+// Write writes human-readable view of bitset to w.
+func (b *Bitset16) Write(w io.ByteWriter) (n int, err error) {
+	return write(b, w, 16)
+}
+
+// String returns human-readable view of bitset.
+func (b *Bitset16) String() string {
+	return str(b, 16)
 }
